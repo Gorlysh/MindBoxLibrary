@@ -1,0 +1,19 @@
+CREATE TABLE Tovar (				//ТАБЛИЦА ТОВАРОВ
+	id int primary key not null,
+	name_tov nvarchar(50)
+) 
+
+CREATE TABLE Category(				//ТАБЛИЦА КАТЕГОРИЙ 
+	id int primary key not null,
+	name_cat nvarchar(50)
+) 
+
+CREATE TABLE SootvetstvieTovarCategory( 		//ТАБЛИЦА СООТВЕТСТВИЯ КАТЕГОРИЙ И ТОВАРОВ
+	prodId int foreign key references Товары(id),
+	catId int foreign key references Категории(id)
+) 
+
+SELECT name_tov, name_cat from (Tovar T left join SootvetstvieTovarCategory TC on T.id = TC.prodId) 
+								left join Category C on C.id = TC.catId;
+								
+		//СНАЧАЛА ВЫБИРАЕМ ВСЕ ТОВАРЫ ИЗ ТАБЛИЦЫ СООТВЕТСТВИЙ И ИЗ ТАБЛИЦЫ ТОВАРОВ(ЕСЛИ ЕСТЬ ТЕ КОТОРЫЕ ОТСУТСТВУЮТ В ТАБЛИЦЕ СООТВЕТСТВИЙ, ЗАТЕМ ДЛЯ ВСЕ ВЫБРАННЫХ ПРОСТАВЛЯЕМ КАТЕГОРИИ ИЗ ТАБЛИЦЫ КАТЕГОРИЙ)
